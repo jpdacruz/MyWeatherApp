@@ -2,7 +2,7 @@ package com.example.openweatherapp.interfaces;
 
 import android.content.Context;
 
-import com.example.openweatherapp.clases.DataCity;
+import com.example.openweatherapp.utils.DataCity;
 
 public interface DetailsInterface {
 

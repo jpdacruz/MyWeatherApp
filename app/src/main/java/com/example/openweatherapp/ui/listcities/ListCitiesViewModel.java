@@ -3,7 +3,7 @@ package com.example.openweatherapp.ui.listcities;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.openweatherapp.model.ListCityRepository;
+import com.example.openweatherapp.repository.ListCityRepository;
 
 import java.util.ArrayList;
 import java.util.List;

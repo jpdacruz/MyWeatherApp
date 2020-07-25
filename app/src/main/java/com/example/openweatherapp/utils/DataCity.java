@@ -1,4 +1,4 @@
-package com.example.openweatherapp.clases;
+package com.example.openweatherapp.utils;
 
 import android.os.Parcel;
 import android.os.Parcelable;

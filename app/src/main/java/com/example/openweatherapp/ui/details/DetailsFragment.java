@@ -6,14 +6,20 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProviders;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.openweatherapp.MapsActivity;
-import com.example.openweatherapp.clases.Constantes;
-import com.example.openweatherapp.clases.DataCity;
+import com.example.openweatherapp.room.CityEntity;
+import com.example.openweatherapp.ui.MapsActivity;
+import com.example.openweatherapp.ui.favcities.FavoriteViewModel;
+import com.example.openweatherapp.utils.Constantes;
+import com.example.openweatherapp.utils.DataCity;
 import com.example.openweatherapp.databinding.FragmentDetailsBinding;
 import com.example.openweatherapp.interfaces.DetailsInterface;
 import com.example.openweatherapp.presenter.DetailsPresenter;
@@ -59,16 +65,27 @@ public class DetailsFragment extends Fragment implements DetailsInterface.view {
 
         city = new DataCity();
         presenter = new DetailsPresenter(this);
+        binding.imageButtonFav.setVisibility(View.GONE);
         binding.buttonToMaps.setVisibility(View.GONE);
+
         binding.buttonToMaps.setOnClickListener(view1 -> {
             toActivityMap();
+        });
+
+        binding.imageButtonFav.setOnClickListener(view12 -> {
+            insertCityRoom();
         });
         binding.progressBarDetails.setVisibility(View.VISIBLE);
         presenter.getCityDetails(nameCity,getContext());
     }
 
-    private void toActivityMap() {
+    private void insertCityRoom() {
 
+        FavoriteViewModel favoriteViewModel = ViewModelProviders.of(this).get(FavoriteViewModel.class);
+        favoriteViewModel.insertCityFav(new CityEntity(city.getNameCity(),city.getCountryCity()));
+    }
+
+    private void toActivityMap() {
         if(city != null){
             Intent intent = new Intent(getActivity(), MapsActivity.class);
             intent.putExtra("city",city);
@@ -78,7 +95,6 @@ public class DetailsFragment extends Fragment implements DetailsInterface.view {
 
     @Override
     public void showResult(DataCity dataCity) {
-
         String urlImage = new StringBuilder(Constantes.BASE_URL_IMAGES)
                 .append(dataCity.getWeatherIconCity())
                 .append("@2x")
@@ -99,7 +115,7 @@ public class DetailsFragment extends Fragment implements DetailsInterface.view {
 
         city = dataCity;
         binding.buttonToMaps.setVisibility(View.VISIBLE);
-
+        binding.imageButtonFav.setVisibility(View.VISIBLE);
         /**
          * to test MVP
         Toast.makeText(getContext(), nameCity, Toast.LENGTH_SHORT).show();

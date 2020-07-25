@@ -1,10 +1,11 @@
-package com.example.openweatherapp;
+package com.example.openweatherapp.ui;
 
 import androidx.fragment.app.FragmentActivity;
 
 import android.os.Bundle;
 
-import com.example.openweatherapp.clases.DataCity;
+import com.example.openweatherapp.R;
+import com.example.openweatherapp.utils.DataCity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;

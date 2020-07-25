@@ -1,8 +1,8 @@
-package com.example.openweatherapp.model;
+package com.example.openweatherapp.repository;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.openweatherapp.MyApp;
+import com.example.openweatherapp.utils.MyApp;
 import com.example.openweatherapp.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

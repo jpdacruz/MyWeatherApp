@@ -1,4 +1,4 @@
-package com.example.openweatherapp;
+package com.example.openweatherapp.utils;
 
 import android.app.Application;
 import android.content.Context;

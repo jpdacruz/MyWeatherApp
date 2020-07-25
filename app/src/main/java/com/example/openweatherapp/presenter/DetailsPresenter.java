@@ -2,7 +2,7 @@ package com.example.openweatherapp.presenter;
 
 import android.content.Context;
 
-import com.example.openweatherapp.clases.DataCity;
+import com.example.openweatherapp.utils.DataCity;
 import com.example.openweatherapp.interfaces.DetailsInterface;
 import com.example.openweatherapp.model.DetailsModel;
 

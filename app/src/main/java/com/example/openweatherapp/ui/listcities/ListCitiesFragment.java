@@ -55,7 +55,6 @@ public class ListCitiesFragment extends Fragment {
         adapterListCity = new AdapterListCity(mCityFoundList, getContext());
         binding.recyclerViewCities.setAdapter(adapterListCity);
         adapterListCity.setOnClickListener(view1 -> goToDetails(view1));
-        binding.progressBarCities.setVisibility(View.GONE);
 
         getListCitiesViewModel();
         initSearchView();
@@ -71,7 +70,6 @@ public class ListCitiesFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String s) {
-
                 mCityFoundList = listCitiesViewModel.setCityFoundVMList(mCityList,s);
                 adapterListCity.setData(mCityFoundList);
                 return true;
