@@ -24,7 +24,6 @@ public class ListCityRepository {
 
         this.mCityMutableList = new MutableLiveData<>();
         this.mCityArrayList = new ArrayList<>();
-
     }
 
     public MutableLiveData<List<String>> getmCityMutableList() {

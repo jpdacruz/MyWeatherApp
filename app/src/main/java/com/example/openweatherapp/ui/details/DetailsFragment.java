@@ -15,8 +15,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.openweatherapp.MapsActivity;
 import com.example.openweatherapp.room.CityEntity;
-import com.example.openweatherapp.ui.MapsActivity;
 import com.example.openweatherapp.ui.favcities.FavoriteViewModel;
 import com.example.openweatherapp.utils.Constantes;
 import com.example.openweatherapp.utils.DataCity;

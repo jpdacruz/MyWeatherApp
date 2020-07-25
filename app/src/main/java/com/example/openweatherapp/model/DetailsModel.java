@@ -36,7 +36,7 @@ public class DetailsModel implements DetailsInterface.model {
                 .append("&units=metric&appId=")
                 .append(Constantes.APIKEY)
                 .toString();
-
+        //String url2 = "https://api.openweathermap.org/data/2.5/weather?q="+nameCity+"&lang=sp&units=metric&appId=0896430de0f30dab7ba1b9c5eb39bdcd";
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, response -> {
 
             dataCity = new DataCity();
