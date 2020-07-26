@@ -17,5 +17,4 @@ public interface CityDao {
 
     @Query("SELECT * FROM cities ORDER BY nameCity ASC")
     LiveData<List<CityEntity>> getCitiesFav();
-
 }
