@@ -12,16 +12,20 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.example.openweatherapp.ui.favcities.FavoriteFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_favorite" />
+        android:id="@+id/navigation_favorite"
+        android:name="com.example.openweatherapp.ui.favorite.FavoriteFragment"
+        android:label="@string/title_favorite"
+        tools:layout="@layout/fragment_favorite" >
+        <action
+            android:id="@+id/action_navigation_dashboard_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.openweatherapp.ui.listcities.ListCitiesFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_listcities" >
+        android:id="@+id/navigation_search"
+        android:name="com.example.openweatherapp.ui.search.SearchFragment"
+        android:label="@string/title_search"
+        tools:layout="@layout/fragment_search" >
         <action
             android:id="@+id/action_navigation_notifications_to_detailsFragment"
             app:destination="@id/detailsFragment" />
@@ -34,5 +38,8 @@
         <argument
             android:name="cityname"
             app:argType="string" />
+        <argument
+            android:name="isFavorite"
+            app:argType="boolean" />
     </fragment>
 </navigation>

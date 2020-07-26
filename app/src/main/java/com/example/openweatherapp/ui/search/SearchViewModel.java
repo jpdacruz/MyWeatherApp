@@ -1,22 +1,22 @@
-package com.example.openweatherapp.ui.listcities;
+package com.example.openweatherapp.ui.search;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.openweatherapp.repository.ListCityRepository;
+import com.example.openweatherapp.model.repository.SearchRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListCitiesViewModel extends ViewModel {
+public class SearchViewModel extends ViewModel {
 
     private MutableLiveData<List<String>> mCityVMList;
-    private ListCityRepository repositorio;
+    private SearchRepository searchRepository;
 
-    public ListCitiesViewModel() {
+    public SearchViewModel() {
 
-        repositorio = new ListCityRepository();
-        mCityVMList = repositorio.getmCityMutableList();
+        searchRepository = new SearchRepository();
+        mCityVMList =searchRepository.getmCityMutableList();
     }
 
     public MutableLiveData<List<String>> getmCityVMList() {

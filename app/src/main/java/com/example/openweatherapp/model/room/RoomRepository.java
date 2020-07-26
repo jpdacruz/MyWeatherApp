@@ -1,25 +1,24 @@
-package com.example.openweatherapp.repository;
+package com.example.openweatherapp.model.room;
 
 import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 
-import com.example.openweatherapp.room.CityDao;
-import com.example.openweatherapp.room.CityEntity;
-import com.example.openweatherapp.room.CityRoomDatabase;
-import com.example.openweatherapp.repository.asynctask.InsertAsynctaskRoom;
+
+import com.example.openweatherapp.model.entity.CityEntity;
+import com.example.openweatherapp.model.room.asynstask.InsertAsynctaskRoom;
 
 import java.util.List;
 
 public class RoomRepository {
 
-    private CityDao cityDao;
+    private WeatherCityDao cityDao;
     private LiveData<List<CityEntity>> listFavCities;
 
     public RoomRepository(Application application){
         CityRoomDatabase db = CityRoomDatabase.getDatabase(application);
-        cityDao = db.cityDao();
-        listFavCities = cityDao.getCitiesFav();
+        cityDao = db.weatherCityDao();
+        listFavCities = cityDao.getFavCities();
     }
 
     public LiveData<List<CityEntity>> getFavCities(){
@@ -30,7 +29,7 @@ public class RoomRepository {
         new InsertAsynctaskRoom(cityDao).execute(cityEntity);
     }
 
-    public void deleteCityFav (int iDcity){
-        cityDao.deleteCityFav(iDcity);
+    public void deleteCityFav (String iDcity){
+        cityDao.deleteById(iDcity);
     }
 }

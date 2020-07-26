@@ -7,8 +7,6 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
-import com.example.openweatherapp.R;
-import com.example.openweatherapp.utils.DataCity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -19,13 +17,13 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    private DataCity dataCity;
+    //private DataCity dataCity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        checkBundle();
+        //checkBundle();
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -37,7 +35,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-
+    /**
         mMap = googleMap;
         String mLocation = new StringBuilder(dataCity.getNameCity()).append(dataCity.getCountryCity()).toString();
         double iLong = Double.parseDouble(dataCity.getLongCoordCity());
@@ -47,10 +45,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.addMarker(new MarkerOptions().position(cityPlace).title(mLocation));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(cityPlace));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(2.0f));
+    */
     }
 
     private void checkBundle() {
-
+    /**
         Bundle bundle = getIntent().getExtras();
 
         dataCity = null;
@@ -60,5 +59,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             dataCity = new DataCity();
             dataCity = bundle.getParcelable("city");
         }
+
+    */
     }
 }

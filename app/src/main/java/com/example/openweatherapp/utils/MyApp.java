@@ -3,6 +3,9 @@ package com.example.openweatherapp.utils;
 import android.app.Application;
 import android.content.Context;
 
+/**
+ * for get Instance or context in model
+ */
 public class MyApp extends Application {
 
     private static MyApp instance;

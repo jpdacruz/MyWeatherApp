@@ -1,4 +1,4 @@
-package com.example.openweatherapp.ui.favcities;
+package com.example.openweatherapp.ui.favorite;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,20 +10,20 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.openweatherapp.R;
-import com.example.openweatherapp.room.CityEntity;
+import com.example.openweatherapp.model.entity.CityEntity;
 
 import java.util.List;
 
-public class AdapterCitiFav
-        extends RecyclerView.Adapter<AdapterCitiFav.ViewHolder>
+public class AdapterFavorites
+        extends RecyclerView.Adapter<AdapterFavorites.ViewHolder>
         implements View.OnClickListener {
 
-    private List<CityEntity> mCitiesFavsList;
+    private List<CityEntity> mCitiesFavList;
     private Context context;
     private View.OnClickListener listener;
 
-    public AdapterCitiFav(List<CityEntity> mCitiesFavsList, Context context) {
-        this.mCitiesFavsList = mCitiesFavsList;
+    public AdapterFavorites(List<CityEntity> mCitiesFavList, Context context) {
+        this.mCitiesFavList = mCitiesFavList;
         this.context = context;
     }
 
@@ -31,44 +31,39 @@ public class AdapterCitiFav
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_fav_city, parent, false);
-
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_cities, parent, false);
         view.setOnClickListener(this);
-
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        CityEntity cityEntity = mCitiesFavsList.get(position);
-        holder.tvCityName.setText(cityEntity.getNameCity());
-        holder.tvCountryName.setText(cityEntity.getCountryCity());
+        CityEntity cityEntity = mCitiesFavList.get(position);
+        holder.tvCityName.setText(String.format("%s, %s", cityEntity.getNameCity(), cityEntity.getCountryCity()));
     }
 
     @Override
     public int getItemCount() {
-
-        if (mCitiesFavsList != null) {
-            return mCitiesFavsList.size();
+        if (mCitiesFavList != null) {
+            return mCitiesFavList.size();
         } else {
             return 0;
         }
     }
 
-    public void setData(List<CityEntity> cityNames) {
-
-        this.mCitiesFavsList = cityNames;
-        notifyDataSetChanged();
-    }
-
     @Override
     public void onClick(View view) {
-
         if(listener != null){
 
             listener.onClick(view);
         }
+    }
+
+    public void setData(List<CityEntity> cityNames) {
+
+        this.mCitiesFavList = cityNames;
+        notifyDataSetChanged();
     }
 
     public void setOnClickListener(View.OnClickListener listener) {
@@ -79,12 +74,10 @@ public class AdapterCitiFav
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView tvCityName;
-        private TextView tvCountryName;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            tvCityName = itemView.findViewById(R.id.textViewFavCity);
-            tvCountryName = itemView.findViewById(R.id.textViewFavCountry);
+            tvCityName = itemView.findViewById(R.id.textViewItemListCities);
         }
     }
 }

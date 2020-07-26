@@ -1,15 +1,13 @@
-package com.example.openweatherapp.ui.favcities;
+package com.example.openweatherapp.ui.favorite;
 
 import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
-import com.example.openweatherapp.repository.RoomRepository;
-import com.example.openweatherapp.room.CityEntity;
+import com.example.openweatherapp.model.entity.CityEntity;
+import com.example.openweatherapp.model.room.RoomRepository;
 
 import java.util.List;
 
@@ -31,7 +29,7 @@ public class FavoriteViewModel extends AndroidViewModel {
         return listCityFav;
     }
 
-    //method to inster new favorite city
+    //method to insert new favorite city
     public void insertCityFav(CityEntity newCityFav){
 
         roomRepository.insertFavCity(newCityFav);

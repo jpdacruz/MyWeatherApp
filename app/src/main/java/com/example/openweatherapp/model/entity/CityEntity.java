@@ -1,10 +1,18 @@
-package com.example.openweatherapp.utils;
+package com.example.openweatherapp.model.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class DataCity implements Parcelable {
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+@Entity(tableName = "weather_city")
+public class CityEntity implements Parcelable {
+
+    @PrimaryKey
+    @NonNull
+    private String idCity;
     private String nameCity;
     private String countryCity;
     private String tempCity;
@@ -19,7 +27,9 @@ public class DataCity implements Parcelable {
     private String weatherDescriptionCity;
     private String weatherIconCity;
 
-    public DataCity(String nameCity, String countryCity, String tempCity, String pressureCity, String humidityCity, String maxTempCity, String minTempCity, String latCoordCity, String longCoordCity, String weatherIdCity, String weatherConditionCity, String weatherDescriptionCity, String weatherIconCity) {
+    //constructor with all parameters
+    public CityEntity(String idCity, String nameCity, String countryCity, String tempCity, String pressureCity, String humidityCity, String maxTempCity, String minTempCity, String latCoordCity, String longCoordCity, String weatherIdCity, String weatherConditionCity, String weatherDescriptionCity, String weatherIconCity) {
+        this.idCity = idCity;
         this.nameCity = nameCity;
         this.countryCity = countryCity;
         this.tempCity = tempCity;
@@ -35,10 +45,11 @@ public class DataCity implements Parcelable {
         this.weatherIconCity = weatherIconCity;
     }
 
-    public DataCity() {
+    public CityEntity() {
     }
 
-    protected DataCity(Parcel in) {
+    protected CityEntity(Parcel in) {
+        idCity = in.readString();
         nameCity = in.readString();
         countryCity = in.readString();
         tempCity = in.readString();
@@ -54,17 +65,25 @@ public class DataCity implements Parcelable {
         weatherIconCity = in.readString();
     }
 
-    public static final Creator<DataCity> CREATOR = new Creator<DataCity>() {
+    public static final Creator<CityEntity> CREATOR = new Creator<CityEntity>() {
         @Override
-        public DataCity createFromParcel(Parcel in) {
-            return new DataCity(in);
+        public CityEntity createFromParcel(Parcel in) {
+            return new CityEntity(in);
         }
 
         @Override
-        public DataCity[] newArray(int size) {
-            return new DataCity[size];
+        public CityEntity[] newArray(int size) {
+            return new CityEntity[size];
         }
     };
+
+    public String getIdCity() {
+        return idCity;
+    }
+
+    public void setIdCity(String idCity) {
+        this.idCity = idCity;
+    }
 
     public String getNameCity() {
         return nameCity;
@@ -172,8 +191,9 @@ public class DataCity implements Parcelable {
 
     @Override
     public String toString() {
-        return "DataCity{" +
-                "nameCity='" + nameCity + '\'' +
+        return "CityEntity{" +
+                "idCity='" + idCity + '\'' +
+                ", nameCity='" + nameCity + '\'' +
                 ", countryCity='" + countryCity + '\'' +
                 ", tempCity='" + tempCity + '\'' +
                 ", pressureCity='" + pressureCity + '\'' +
@@ -196,6 +216,7 @@ public class DataCity implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(idCity);
         parcel.writeString(nameCity);
         parcel.writeString(countryCity);
         parcel.writeString(tempCity);

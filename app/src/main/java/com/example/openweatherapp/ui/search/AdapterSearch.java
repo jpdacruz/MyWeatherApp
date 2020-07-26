@@ -1,4 +1,4 @@
-package com.example.openweatherapp.ui.listcities;
+package com.example.openweatherapp.ui.search;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,15 +13,15 @@ import com.example.openweatherapp.R;
 
 import java.util.List;
 
-public class AdapterListCity
-        extends RecyclerView.Adapter<AdapterListCity.ViewHolder>
+public class AdapterSearch
+        extends RecyclerView.Adapter<AdapterSearch.ViewHolder>
         implements View.OnClickListener {
 
     private List<String> mCityList;
     private Context context;
     private View.OnClickListener listener;
 
-    public AdapterListCity(List<String> mCityList, Context context) {
+    public AdapterSearch(List<String> mCityList, Context context) {
         this.mCityList = mCityList;
         this.context = context;
     }

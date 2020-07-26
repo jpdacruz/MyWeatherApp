@@ -5,7 +5,8 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.details.DetailsFragment" >
+    tools:context=".ui.details.DetailsFragment"
+    android:background="@color/colorbackground">
 
     <TextView
         android:id="@+id/textViewCityName"
@@ -13,6 +14,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -24,6 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:textSize="60sp"
+        android:textColor="@color/colorAccent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewCityName"
@@ -95,6 +99,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewTemp"
@@ -114,21 +120,23 @@
         android:id="@+id/buttonToMaps"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="60dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/button_rnd"
         android:text="donde queda este lugar?"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textColor="@color/colorwhite"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPressure" />
 
     <ImageButton
         android:id="@+id/imageButtonFav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
-        android:background="@color/design_default_color_background"
         android:src="@android:drawable/btn_star_big_off"
+        android:background="@color/colorbackground"
         app:layout_constraintBottom_toBottomOf="@+id/textViewTemp"
         app:layout_constraintEnd_toStartOf="@+id/textViewTemp"
         app:layout_constraintTop_toBottomOf="@+id/textViewCityName" />

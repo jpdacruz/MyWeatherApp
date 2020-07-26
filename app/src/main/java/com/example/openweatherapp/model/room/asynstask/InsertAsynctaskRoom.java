@@ -1,15 +1,15 @@
-package com.example.openweatherapp.repository.asynctask;
+package com.example.openweatherapp.model.room.asynstask;
 
 import android.os.AsyncTask;
 
-import com.example.openweatherapp.room.CityDao;
-import com.example.openweatherapp.room.CityEntity;
+import com.example.openweatherapp.model.entity.CityEntity;
+import com.example.openweatherapp.model.room.WeatherCityDao;
 
 public class InsertAsynctaskRoom extends AsyncTask<CityEntity, Void, Void> {
 
-    private CityDao cityDaoAsyncTask;
+    private WeatherCityDao cityDaoAsyncTask;
 
-    public InsertAsynctaskRoom(CityDao dao) {
+    public InsertAsynctaskRoom(WeatherCityDao dao) {
         this.cityDaoAsyncTask = dao;
     }
 

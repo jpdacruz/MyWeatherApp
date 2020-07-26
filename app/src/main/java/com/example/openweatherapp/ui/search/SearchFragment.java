@@ -1,4 +1,4 @@
-package com.example.openweatherapp.ui.listcities;
+package com.example.openweatherapp.ui.search;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,25 +14,32 @@ import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.example.openweatherapp.databinding.FragmentListcitiesBinding;
+import com.example.openweatherapp.databinding.FragmentSearchBinding;
+import com.example.openweatherapp.model.entity.CityEntity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListCitiesFragment extends Fragment {
+public class SearchFragment extends Fragment {
 
     private static final String TAG = "ListCitiesFragment";
-    private ListCitiesViewModel listCitiesViewModel;
+
+    //vars
     private List<String> mCityList;
     private List<String> mCityFoundList;
-    private AdapterListCity adapterListCity;
-    private FragmentListcitiesBinding binding;
+    private CityEntity cityEntity;
+    private Boolean isFavorite = false;
+
+    //widgets
+    private SearchViewModel searchViewModel;
+    private AdapterSearch adapterSearch;
+    private FragmentSearchBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        listCitiesViewModel =
-                ViewModelProviders.of(this).get(ListCitiesViewModel.class);
-        binding = FragmentListcitiesBinding.inflate(inflater, container, false);
+        searchViewModel =
+                ViewModelProviders.of(this).get(SearchViewModel.class);
+        binding = FragmentSearchBinding.inflate(inflater, container, false);
 
         View view = binding.getRoot();
 
@@ -51,10 +58,11 @@ public class ListCitiesFragment extends Fragment {
 
         mCityList = new ArrayList<>();
         mCityFoundList = new ArrayList<>();
+        cityEntity = new CityEntity();
         binding.recyclerViewCities.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapterListCity = new AdapterListCity(mCityFoundList, getContext());
-        binding.recyclerViewCities.setAdapter(adapterListCity);
-        adapterListCity.setOnClickListener(view1 -> goToDetails(view1));
+        adapterSearch = new AdapterSearch(mCityFoundList, getContext());
+        binding.recyclerViewCities.setAdapter(adapterSearch);
+        adapterSearch.setOnClickListener(view1 -> goToDetails(view1));
 
         getListCitiesViewModel();
         initSearchView();
@@ -70,8 +78,8 @@ public class ListCitiesFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String s) {
-                mCityFoundList = listCitiesViewModel.setCityFoundVMList(mCityList,s);
-                adapterListCity.setData(mCityFoundList);
+                mCityFoundList = searchViewModel.setCityFoundVMList(mCityList,s);
+                adapterSearch.setData(mCityFoundList);
                 return true;
             }
         });
@@ -79,7 +87,7 @@ public class ListCitiesFragment extends Fragment {
 
     private void getListCitiesViewModel() {
 
-        listCitiesViewModel.getmCityVMList().observe(getViewLifecycleOwner(), cities -> {
+        searchViewModel.getmCityVMList().observe(getViewLifecycleOwner(), cities -> {
             mCityList = cities;
             binding.progressBarCities.setVisibility(View.GONE);
         });
@@ -91,7 +99,7 @@ public class ListCitiesFragment extends Fragment {
         binding.searchViewCities.setQuery("", false);
         binding.searchViewCities.clearFocus();
         NavController navController = Navigation.findNavController(view);
-        NavDirections action = ListCitiesFragmentDirections.actionNavigationNotificationsToDetailsFragment(city);
+        NavDirections action = SearchFragmentDirections.actionNavigationNotificationsToDetailsFragment(city,isFavorite);
         navController.navigate(action);
     }
 }

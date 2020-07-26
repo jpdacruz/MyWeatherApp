@@ -1,4 +1,4 @@
-package com.example.openweatherapp.utils;
+package com.example.openweatherapp.model;
 
 import android.content.Context;
 
@@ -6,20 +6,19 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
-public class RequestSingleton {
-    private static RequestSingleton instance;
+public class RequestVolleySingleton {
+    private static RequestVolleySingleton instance;
     private RequestQueue requestQueue;
     private static Context ctx;
 
-    private RequestSingleton(Context context) {
+    private RequestVolleySingleton(Context context) {
         ctx = context;
         requestQueue = getRequestQueue();
-
     }
 
-    public static synchronized RequestSingleton getInstance(Context context) {
+    public static synchronized RequestVolleySingleton getInstance(Context context) {
         if (instance == null) {
-            instance = new RequestSingleton(context);
+            instance = new RequestVolleySingleton(context);
         }
         return instance;
     }
