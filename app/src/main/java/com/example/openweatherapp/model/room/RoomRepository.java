@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 
 
 import com.example.openweatherapp.model.entity.CityEntity;
+import com.example.openweatherapp.model.room.asynstask.DeleteAsynctaskRoom;
 import com.example.openweatherapp.model.room.asynstask.InsertAsynctaskRoom;
 
 import java.util.List;
@@ -30,6 +31,6 @@ public class RoomRepository {
     }
 
     public void deleteCityFav (String iDcity){
-        cityDao.deleteById(iDcity);
+        new DeleteAsynctaskRoom(cityDao).execute(iDcity);
     }
 }

@@ -34,4 +34,10 @@ public class FavoriteViewModel extends AndroidViewModel {
 
         roomRepository.insertFavCity(newCityFav);
     }
+
+    //method to delete a favorite city
+    public void deleteCityFav(String delCityFavId){
+
+        roomRepository.deleteCityFav(delCityFavId);
+    }
 }

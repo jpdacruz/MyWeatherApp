@@ -1,4 +1,4 @@
-package com.example.openweatherapp;
+package com.example.openweatherapp.ui;
 
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
@@ -7,6 +7,8 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
+import com.example.openweatherapp.R;
+import com.example.openweatherapp.model.entity.CityEntity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -17,14 +19,15 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    //private DataCity dataCity;
+    private CityEntity cityEntity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        //checkBundle();
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+
+        checkBundle();
+
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -35,31 +38,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-    /**
+
         mMap = googleMap;
-        String mLocation = new StringBuilder(dataCity.getNameCity()).append(dataCity.getCountryCity()).toString();
-        double iLong = Double.parseDouble(dataCity.getLongCoordCity());
-        double iLat = Double.parseDouble(dataCity.getLatCoordCity());
+        String mLocation = new StringBuilder(cityEntity.getNameCity()).append(cityEntity.getCountryCity()).toString();
+        double iLong = Double.parseDouble(cityEntity.getLongCoordCity());
+        double iLat = Double.parseDouble(cityEntity.getLatCoordCity());
         // Add a marker in Sydney and move the camera
         LatLng cityPlace = new LatLng(iLat, iLong);
         mMap.addMarker(new MarkerOptions().position(cityPlace).title(mLocation));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(cityPlace));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(2.0f));
-    */
+
     }
 
     private void checkBundle() {
-    /**
+
         Bundle bundle = getIntent().getExtras();
 
-        dataCity = null;
+        cityEntity = null;
 
         if(bundle != null){
 
-            dataCity = new DataCity();
-            dataCity = bundle.getParcelable("city");
+            cityEntity = new CityEntity();
+            cityEntity = bundle.getParcelable("city");
         }
-
-    */
     }
 }

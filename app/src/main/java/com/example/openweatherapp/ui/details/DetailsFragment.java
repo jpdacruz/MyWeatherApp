@@ -1,26 +1,27 @@
 package com.example.openweatherapp.ui.details;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.openweatherapp.R;
+import com.example.openweatherapp.ui.MapsActivity;
 import com.example.openweatherapp.databinding.FragmentDetailsBinding;
 import com.example.openweatherapp.model.DetailsInterface;
 import com.example.openweatherapp.model.entity.CityEntity;
 import com.example.openweatherapp.presenter.DetailsPresenter;
 import com.example.openweatherapp.ui.favorite.FavoriteViewModel;
-import com.example.openweatherapp.utils.Constantes;
+import com.example.openweatherapp.utils.CheckData;
 import com.example.openweatherapp.utils.SetImageUrl;
 
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ public class DetailsFragment extends Fragment implements DetailsInterface.view {
 
     //widgets
     private FragmentDetailsBinding binding;
+    private FavoriteViewModel favoriteViewModel;
 
     public DetailsFragment() {
         // Required empty public constructor
@@ -49,9 +51,16 @@ public class DetailsFragment extends Fragment implements DetailsInterface.view {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             nameCity = DetailsFragmentArgs.fromBundle(getArguments()).getCityname();
-            isFavorite = DetailsFragmentArgs.fromBundle(getArguments()).getIsFavorite();
 
+            /**
+             * fragment gets bundle from Favorite Fragment
+             * the value isFavorite = true if the origin is Fragment Favorite
+             * the values isFavorite = false if the origin is Fragment Search
+             */
+            isFavorite = DetailsFragmentArgs.fromBundle(getArguments()).getIsFavorite();
             //Log.d(TAG, "IS FAVORITE: "+ isFavorite.toString());
+
+            favoriteViewModel = ViewModelProviders.of(this).get(FavoriteViewModel.class);
         }
     }
 
@@ -80,11 +89,16 @@ public class DetailsFragment extends Fragment implements DetailsInterface.view {
         mCityList = new ArrayList<>();
         mCityFoundList = new ArrayList<>();
         cityEntity = new CityEntity();
+
+        //call the presenter
         presenter = new DetailsPresenter(this);
 
+        //clear the view
         binding.buttonToMaps.setVisibility(View.GONE);
         binding.progressBarDetails.setVisibility(View.VISIBLE);
         binding.imageButtonFav.setVisibility(View.GONE);
+
+
         binding.buttonToMaps.setOnClickListener(view1 -> {
             toActivityMap();
         });
@@ -93,46 +107,60 @@ public class DetailsFragment extends Fragment implements DetailsInterface.view {
             insertCityRoom();
         });
 
+        //get details for selected city
         presenter.getCityDetails(nameCity);
     }
 
     private void insertCityRoom() {
 
-        if(cityEntity!=null){
+        favoriteViewModel.getListCityFavs().observe(getViewLifecycleOwner(), new Observer<List<CityEntity>>() {
+            @Override
+            public void onChanged(List<CityEntity> cityEntities) {
 
-            FavoriteViewModel favoriteViewModel = ViewModelProviders.of(this).get(FavoriteViewModel.class);
+                String idCityToInsert = cityEntity.getIdCity();
 
-            try {
+                if (CheckData.isCityExist(cityEntities, idCityToInsert)) {
 
-                binding.imageButtonFav.setVisibility(View.GONE);
-                favoriteViewModel.insertCityFav(cityEntity);
+                    Toast.makeText(getContext(), "Esta ciudad ya está en favoritas", Toast.LENGTH_SHORT).show();
 
-            } catch (Exception e) {
-                e.printStackTrace();
+                } else {
+
+                    binding.imageButtonFav.setVisibility(View.GONE);
+                    favoriteViewModel.insertCityFav(cityEntity);
+                }
+                //Toast.makeText(getContext(), cityEntity.toString(), Toast.LENGTH_SHORT).show();
             }
-            //Toast.makeText(getContext(), cityEntity.toString(), Toast.LENGTH_SHORT).show();
-
-        }else{
-
-            Toast.makeText(getContext(), "NO SE PUEDE INSERTAR", Toast.LENGTH_SHORT).show();
-        }
+        });
     }
 
     private void toActivityMap() {
 
+        Intent intent = new Intent(getActivity(), MapsActivity.class);
+        /**
+         *set bundle extra.
+         *Send to ActivityMap the Entity city, to set the long and Lat in the map
+         */
+        intent.putExtra("city", cityEntity);
+        startActivity(intent);
     }
 
     @Override
     public void showResult(CityEntity mCityEntity, int result) {
 
+        /**
+         * int result for test purposes
+         */
+
         cityEntity = mCityEntity;
-        String icon = cityEntity.getWeatherIconCity();
-        String urlImage = SetImageUrl.setImageUrl(icon);
-        //Log.d(TAG, "URL: "  + urlImage);
+
         binding.progressBarDetails.setVisibility(View.GONE);
         binding.textViewCityName.setText(String.format("%s ,%s", cityEntity.getNameCity(), cityEntity.getCountryCity()));
         binding.textViewCent.setText("ºC");
 
+        //show weather icon
+        String icon = cityEntity.getWeatherIconCity();
+        String urlImage = SetImageUrl.setImageUrl(icon);
+        //Log.d(TAG, "URL: "  + urlImage);
         Glide.with(getContext()).load(urlImage).into(binding.imageView);
 
         binding.textViewDescription.setText(cityEntity.getWeatherDescriptionCity());
@@ -142,15 +170,18 @@ public class DetailsFragment extends Fragment implements DetailsInterface.view {
         binding.textViewmaxTemp.setText(String.format("Máxima: %s", cityEntity.getMaxTempCity()));
         binding.textViewMinTemp.setText(String.format("Minima: %s", cityEntity.getMinTempCity()));
 
-        if (isFavorite){
-            showFavButtonColored();
+        /**
+         * if isFavorite:
+         * show colored addFavorite button
+         * disable button (cant click on it)
+         */
+        if (isFavorite) {
+            binding.imageButtonFav.setImageResource(android.R.drawable.btn_star_big_on);
+            binding.imageButtonFav.setClickable(false);
         }
+
+        //show buttons in the view after the city data is displayed
         binding.imageButtonFav.setVisibility(View.VISIBLE);
         binding.buttonToMaps.setVisibility(View.VISIBLE);
-    }
-
-    private void showFavButtonColored() {
-        binding.imageButtonFav.setImageResource(android.R.drawable.btn_star_big_on);
-        binding.imageButtonFav.setClickable(false);
     }
 }

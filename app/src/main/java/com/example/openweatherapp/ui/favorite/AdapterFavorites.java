@@ -60,10 +60,17 @@ public class AdapterFavorites
         }
     }
 
+    //method to refresh the recycler view
     public void setData(List<CityEntity> cityNames) {
 
         this.mCitiesFavList = cityNames;
         notifyDataSetChanged();
+    }
+
+    //get clicked city
+    public String getCity(int position){
+
+        return mCitiesFavList.get(position).getIdCity();
     }
 
     public void setOnClickListener(View.OnClickListener listener) {

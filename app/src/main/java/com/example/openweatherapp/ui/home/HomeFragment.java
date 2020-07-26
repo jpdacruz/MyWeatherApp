@@ -41,6 +41,7 @@ public class HomeFragment extends Fragment implements DetailsInterface.view {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //
         presenter = new DetailsPresenter(this);
         presenter.getCityDetails("Ciudad Autónoma de Buenos Aires,AR");
 
@@ -49,11 +50,13 @@ public class HomeFragment extends Fragment implements DetailsInterface.view {
     @Override
     public void showResult(CityEntity cityEntity, int codResult) {
         binding.progressBarDetails.setVisibility(View.GONE);
-        String icon = cityEntity.getWeatherIconCity();
-        String urlImage = SetImageUrl.setImageUrl(icon);
+
         binding.textViewCityName.setText(String.format("%s ,%s", cityEntity.getNameCity(), cityEntity.getCountryCity()));
         binding.textViewCent.setText("ºC");
 
+        String icon = cityEntity.getWeatherIconCity();
+        //use Util.SetImageUrl method to get the complete URL
+        String urlImage = SetImageUrl.setImageUrl(icon);
         Glide.with(getContext()).load(urlImage).into(binding.imageView);
 
         binding.textViewDescription.setText(cityEntity.getWeatherDescriptionCity());

@@ -99,7 +99,7 @@ public class SearchFragment extends Fragment {
         binding.searchViewCities.setQuery("", false);
         binding.searchViewCities.clearFocus();
         NavController navController = Navigation.findNavController(view);
-        NavDirections action = SearchFragmentDirections.actionNavigationNotificationsToDetailsFragment(city,isFavorite);
+        NavDirections action = SearchFragmentDirections.actionNavigationNotificationsToDetailsFragment(city, isFavorite);
         navController.navigate(action);
     }
 }

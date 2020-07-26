@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,7 +14,9 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.openweatherapp.databinding.FragmentFavoriteBinding;
 import com.example.openweatherapp.model.entity.CityEntity;
@@ -74,10 +77,30 @@ public class FavoriteFragment extends Fragment {
 
         adapterCityFav.setOnClickListener(view1 -> goToDetailsFav(view1));
         getListFavCities();
+
+        //init callback to delete item from recycler view
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback
+                (0,ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+                favoriteViewModel.deleteCityFav(adapterCityFav.getCity(viewHolder.getAdapterPosition()));
+                Toast.makeText(getContext(), "Ciudad eliminada de favoritas", Toast.LENGTH_SHORT).show();
+            }
+        }).attachToRecyclerView(binding.recyclerViewFav);
     }
 
     private void getListFavCities() {
 
+        /**
+         * to avoid force the view, the adapter is attached only when you begins a search
+         */
         favoriteViewModel.getListCityFavs().observe(getViewLifecycleOwner(), cityEntities -> {
             mCityFavList = cityEntities;
             adapterCityFav.setData(mCityFavList);
@@ -89,7 +112,7 @@ public class FavoriteFragment extends Fragment {
 
         CityEntity cityEntity = mCityFavList.get(binding.recyclerViewFav.getChildAdapterPosition(view));
         String city = cityEntity.getNameCity()+","+cityEntity.getCountryCity();
-        //Log.d(TAG,"TEXTO: " + name + ","+country);
+        //Log.d(TAG,"CITY: " + name + ","+country);
         NavController navController = Navigation.findNavController(view);
         NavDirections action = FavoriteFragmentDirections.actionNavigationDashboardToDetailsFragment(city,isFavorite);
         navController.navigate(action);

@@ -35,6 +35,7 @@ public class SearchRepository {
         return mCityMutableList;
     }
 
+    //get List of cities
     private class BackgroundTask extends AsyncTask<Void,Void,ArrayList<String>>{
 
         @Override
@@ -45,6 +46,8 @@ public class SearchRepository {
 
                 //add MyApp clase to the proyect to get Context for getResources. Bad practice, I know it!
                 InputStreamReader reader = new InputStreamReader
+
+                        //get data for zip file
                         (new GZIPInputStream(MyApp.getContext()
                                 .getResources()
                                 .openRawResource(R.raw.city_list)));
@@ -54,12 +57,13 @@ public class SearchRepository {
                 String citydata;
                 while ((citydata = in.readLine())!= null)
                     stringBuilder.append(citydata);
+
+                //pass arraylist to Gson
                 mCityArrayList = new Gson().fromJson(stringBuilder.toString(), new TypeToken<List<String>>(){}.getType());
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
             return mCityArrayList;
         }
     }
