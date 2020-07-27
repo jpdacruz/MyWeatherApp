@@ -33,8 +33,8 @@
     <fragment
         android:id="@+id/detailsFragment"
         android:name="com.example.openweatherapp.ui.details.DetailsFragment"
-        android:label="fragment_details"
-        tools:layout="@layout/fragment_details" >
+        android:label="El clima en la ciudad"
+        tools:layout="@layout/fragment_details">
         <argument
             android:name="cityname"
             app:argType="string" />
@@ -42,4 +42,9 @@
             android:name="isFavorite"
             app:argType="boolean" />
     </fragment>
+    <activity
+        android:id="@+id/splashActivity"
+        android:name="com.example.openweatherapp.ui.SplashActivity"
+        android:label="activity_splash"
+        tools:layout="@layout/activity_splash" />
 </navigation>

@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.openweatherapp.ui.MapsActivity;
+import com.example.openweatherapp.MapBoxActivity;
 import com.example.openweatherapp.databinding.FragmentDetailsBinding;
 import com.example.openweatherapp.model.DetailsInterface;
 import com.example.openweatherapp.model.entity.CityEntity;
@@ -135,7 +135,7 @@ public class DetailsFragment extends Fragment implements DetailsInterface.view {
 
     private void toActivityMap() {
 
-        Intent intent = new Intent(getActivity(), MapsActivity.class);
+        Intent intent = new Intent(getActivity(), MapBoxActivity.class);
         /**
          *set bundle extra.
          *Send to ActivityMap the Entity city, to set the long and Lat in the map
